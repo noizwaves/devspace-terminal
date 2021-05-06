@@ -38,3 +38,11 @@ The port forwarding rules are setup to forward traffic from your app pod, to the
     1.  Opening the folder `~/workspace/fitness`
 1.  Start the app by `Terminal $ devspace dev`
 1.  Open the app locally at [http://localhost:3000](http://localhost:3000)
+
+## Features
+
+1.  Automatic pass-through of SSH key for GitHub and Loft configuration
+1.  Synchronization of key development configurations via the `./home` directory:
+    1.  `~/.gitconfig` for Git configuration
+    1.  `~/.aliases` for custom aliases, functions, and prompts
+    1.  `~/local/share/code-server/User/settings.json` for VS Code settings
