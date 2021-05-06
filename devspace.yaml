@@ -1,0 +1,54 @@
+version: v1beta9
+images:
+  cloud-shell:
+    image: registry.noizwaves.cloud/cloud-shell
+    rebuildStrategy: ignoreContextChanges
+    build:
+      buildKit: {}
+deployments:
+  - name: cloud-shell
+    helm:
+      chart:
+        name: ./helm/cloud-shell
+      values:
+        image: registry.noizwaves.cloud/cloud-shell
+        github_ssh_key: ${GITHUB_SSH_KEY}
+        loft_config: ${LOFT_CONFIG}
+vars:
+  - name: GITHUB_SSH_KEY
+    source: command
+    command: "cat ~/.ssh/id_rsa"
+  - name: LOFT_CONFIG
+    source: command
+    command: "cat ~/.loft/config.json"
+dev:
+  sync:
+    - containerName: cloud-shell
+      labelSelector:
+        name: cloud-shell
+      initialSync: preferLocal
+      containerPath: /root
+      localSubPath: ./home
+      excludePaths:
+        - '**'
+        - '!/.aliases'
+        - '!/.gitconfig'
+        - '!/.local/share/code-server/User/settings.json'
+  ports:
+    - labelSelector:
+        name: cloud-shell
+      forward:
+        - port: 8080
+          remotePort: 8080
+    - labelSelector:
+        name: cloud-shell
+      forward:
+        - port: 3000
+          remotePort: 3000
+    - labelSelector:
+        name: cloud-shell
+      forward:
+        - port: 3035
+          remotePort: 3035
+  logs:
+    disabled: true

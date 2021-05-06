@@ -1,0 +1,6 @@
+/.devspace
+/helm
+/home
+
+/.gitignore
+/devspace.yaml

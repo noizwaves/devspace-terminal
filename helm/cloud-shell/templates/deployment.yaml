@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-shell
+  labels:
+    name: cloud-shell
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: cloud-shell
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: cloud-shell
+    spec:
+      containers:
+        - name: cloud-shell
+          image: {{ .Values.image }}
+          # Sleep command that reacts to termination requests: https://stackoverflow.com/a/35770783
+          command: ["bash", "-c", "trap : TERM INT; sleep infinity & wait"]
+          workingDir: "/root"
+          volumeMounts:
+            - name: home
+              mountPath: /root/workspace
+              subPath: "workspace"
+            - name: home
+              mountPath: "/root/.local/share/code-server"
+              subPath: ".local/share/code-server"
+            - name: home
+              mountPath: "/root/.ssh"
+              subPath: .ssh
+            - name: github-ssh-key
+              mountPath: "/root/.ssh/id_rsa"
+              subPath: id_rsa
+              readOnly: true
+            - name: loft-config
+              mountPath: "/root/.loft/config.json"
+              subPath: config.json
+              readOnly: true
+            - name: code-server-config
+              mountPath: "/root/.config/code-server/config.yaml"
+              subPath: config.yaml
+      dnsPolicy: ClusterFirst
+      volumes:
+        - name: home
+          persistentVolumeClaim:
+            claimName: home
+        - name: github-ssh-key
+          secret:
+            secretName: github-ssh-key
+            items:
+              - key: ssh-privatekey
+                path: id_rsa
+                mode: 0600
+        - name: loft-config
+          secret:
+            secretName: loft-config
+            items:
+              - key: config.json
+                path: config.json
+        - name: code-server-config
+          configMap:
+            name: code-server-config
