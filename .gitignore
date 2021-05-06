@@ -1,6 +1,5 @@
 /.devspace/
 /.aliases
-/vscode/
 
 /home/*
 !/home/.aliases.template

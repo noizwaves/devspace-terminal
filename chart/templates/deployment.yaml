@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cloud-shell
+  name: terminal
   labels:
-    name: cloud-shell
+    name: terminal
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: cloud-shell
+      name: terminal
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        name: cloud-shell
+        name: terminal
     spec:
       containers:
-        - name: cloud-shell
+        - name: terminal
           image: {{ .Values.image }}
           # Sleep command that reacts to termination requests: https://stackoverflow.com/a/35770783
           command: ["bash", "-c", "trap : TERM INT; sleep infinity & wait"]
