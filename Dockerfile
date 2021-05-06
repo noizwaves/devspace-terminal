@@ -7,7 +7,9 @@ RUN apt-get update && apt-get install -y \
         openssh-client \
         vim \
         procps \
-        tmux
+        tmux \
+        apt-transport-https \
+        ca-certificates
 
 # buildx CLI
 RUN curl -fsOL https://github.com/docker/buildx/releases/download/v0.5.1/buildx-v0.5.1.linux-amd64 && \
@@ -19,6 +21,12 @@ RUN curl -fsOL https://github.com/loft-sh/devspace/releases/download/v5.12.1/dev
     chmod +x devspace-linux-amd64 && \
     mv devspace-linux-amd64 /usr/local/bin/devspace && \
     devspace add plugin https://github.com/loft-sh/loft-devspace-plugin
+
+# kubectl
+RUN curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list && \
+    apt-get update && \
+    apt-get install -y kubectl
 
 # Visual Studio Code
 RUN curl -fsSL https://code-server.dev/install.sh | sh
