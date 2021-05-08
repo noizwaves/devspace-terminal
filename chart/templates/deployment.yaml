@@ -30,6 +30,9 @@ spec:
               mountPath: "/root/.kube"
               subPath: .kube
             - name: home
+              mountPath: "/root/.vscode-server"
+              subPath: .vscode-server
+            - name: home
               mountPath: "/root/.ssh"
               subPath: .ssh
             - name: github-ssh-key
