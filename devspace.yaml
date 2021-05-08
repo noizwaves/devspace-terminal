@@ -4,7 +4,8 @@ images:
     image: registry.noizwaves.cloud/terminal
     rebuildStrategy: ignoreContextChanges
     build:
-      buildKit: {}
+      buildKit:
+        inCluster: {}
 deployments:
   - name: terminal
     helm:
