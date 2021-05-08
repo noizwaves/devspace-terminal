@@ -1,5 +1,5 @@
 # devspace-terminal
-A lightweight cloud-based development environment using DevSpace and code-server (Visual Studio Code)
+A lightweight cloud-based development environment using DevSpace and Visual Studio Code
 
 ## Overview
 
@@ -32,11 +32,11 @@ The port forwarding rules are setup to forward traffic from your app pod, to the
     1.  `Terminal $ git clone git@github.com:noizwaves/fitness.git`
     1.  `Terminal $ cd fitness`
     1.  `Terminal $ git checkout using-terminal`
-1.  Launch VSCode by:
-    1.  Starting the server component by `Terminal $ code-server &`
-    1.  Navigating to [http://localhost:8080](http://localhost:8080)
-    1.  Opening the folder `~/workspace/fitness`
 1.  Start the app by `Terminal $ devspace dev`
+1.  Launch Visual Studio Code by:
+    1.  Starting Visual Studio Code locally
+    1.  Following the setup instructions for [remote development](https://code.visualstudio.com/docs/remote/attach-container#_attach-to-a-container-in-a-kubernetes-cluster)
+    1.  Attaching to the `fitness-web` pod
 1.  Open the app locally at [http://localhost:3000](http://localhost:3000)
 
 ## Features
@@ -45,4 +45,3 @@ The port forwarding rules are setup to forward traffic from your app pod, to the
 1.  Synchronization of key development configurations via the `./home` directory:
     1.  `~/.gitconfig` for Git configuration
     1.  `~/.aliases` for custom aliases, functions, and prompts
-    1.  `~/local/share/code-server/User/settings.json` for VS Code settings

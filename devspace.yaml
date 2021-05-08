@@ -33,13 +33,7 @@ dev:
         - '**'
         - '!/.aliases'
         - '!/.gitconfig'
-        - '!/.local/share/code-server/User/settings.json'
   ports:
-    - labelSelector:
-        name: terminal
-      forward:
-        - port: 8080
-          remotePort: 8080
     - labelSelector:
         name: terminal
       forward:

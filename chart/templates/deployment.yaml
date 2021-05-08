@@ -27,9 +27,6 @@ spec:
               mountPath: /root/workspace
               subPath: "workspace"
             - name: home
-              mountPath: "/root/.local/share/code-server"
-              subPath: ".local/share/code-server"
-            - name: home
               mountPath: "/root/.kube"
               subPath: .kube
             - name: home
@@ -43,9 +40,6 @@ spec:
               mountPath: "/root/.loft/config.json"
               subPath: config.json
               readOnly: true
-            - name: code-server-config
-              mountPath: "/root/.config/code-server/config.yaml"
-              subPath: config.yaml
       dnsPolicy: ClusterFirst
       volumes:
         - name: home
@@ -64,6 +58,3 @@ spec:
             items:
               - key: config.json
                 path: config.json
-        - name: code-server-config
-          configMap:
-            name: code-server-config

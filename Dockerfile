@@ -28,9 +28,6 @@ RUN curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packa
     apt-get update && \
     apt-get install -y kubectl
 
-# Visual Studio Code
-RUN curl -fsSL https://code-server.dev/install.sh | sh
-
 # gh CLI
 #RUN curl -fsOL https://github.com/cli/cli/releases/download/v1.9.2/gh_1.9.2_linux_amd64.tar.gz && \
 #    tar -zxf gh_1.9.2_linux_amd64.tar.gz && \
