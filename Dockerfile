@@ -16,11 +16,10 @@ RUN curl -fsOL https://github.com/docker/buildx/releases/download/v0.5.1/buildx-
     chmod +x buildx-v0.5.1.linux-amd64 && \
     mv buildx-v0.5.1.linux-amd64 /usr/local/bin/buildx
 
-# devspace CLI + loft plugin
-RUN curl -fsOL https://github.com/loft-sh/devspace/releases/download/v5.12.1/devspace-linux-amd64 && \
+# DevSpace CLI
+RUN curl -fsOL https://github.com/loft-sh/devspace/releases/download/v5.12.2/devspace-linux-amd64 && \
     chmod +x devspace-linux-amd64 && \
-    mv devspace-linux-amd64 /usr/local/bin/devspace && \
-    devspace add plugin https://github.com/loft-sh/loft-devspace-plugin
+    mv devspace-linux-amd64 /usr/local/bin/devspace
 
 # kubectl
 RUN curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg && \
@@ -36,5 +35,9 @@ RUN curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packa
 #    cp -R gh_1.9.2_linux_amd64/share/* /usr/local/share &&
 #    rm -rf gh_1.9.2_linux_amd64 gh_1.9.2_linux_amd64.tar.gz
 
-# Setup aliases
-ADD .bashrc /root/
+RUN groupadd --gid 1000 -r terminal-user && useradd --uid 1000 --no-log-init -r -m -g terminal-user terminal-user
+USER terminal-user
+WORKDIR /home/terminal-user
+
+# Loft plugin for DevSpace
+RUN devspace add plugin https://github.com/loft-sh/loft-devspace-plugin

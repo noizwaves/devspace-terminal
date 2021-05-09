@@ -1,5 +1,4 @@
 /.devspace/
-/.aliases
 
 /home/*
-!/home/.aliases.template
+!/home/.bash_aliases.template

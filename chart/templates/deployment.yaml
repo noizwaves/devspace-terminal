@@ -21,28 +21,32 @@ spec:
           image: {{ .Values.image }}
           # Sleep command that reacts to termination requests: https://stackoverflow.com/a/35770783
           command: ["bash", "-c", "trap : TERM INT; sleep infinity & wait"]
-          workingDir: "/root"
+          workingDir: "/home/terminal-user"
           volumeMounts:
             - name: home
-              mountPath: /root/workspace
+              mountPath: /home/terminal-user/workspace
               subPath: "workspace"
             - name: home
-              mountPath: "/root/.kube"
+              mountPath: "/home/terminal-user/.kube"
               subPath: .kube
             - name: home
-              mountPath: "/root/.vscode-server"
+              mountPath: "/home/terminal-user/.vscode-server"
               subPath: .vscode-server
             - name: home
-              mountPath: "/root/.ssh"
+              mountPath: "/home/terminal-user/.ssh"
               subPath: .ssh
             - name: github-ssh-key
-              mountPath: "/root/.ssh/id_rsa"
+              mountPath: "/home/terminal-user/.ssh/id_rsa"
               subPath: id_rsa
               readOnly: true
             - name: loft-config
-              mountPath: "/root/.loft/config.json"
+              mountPath: "/home/terminal-user/.loft/config.json"
               subPath: config.json
               readOnly: true
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 1000
+        runAsGroup: 1000
       dnsPolicy: ClusterFirst
       volumes:
         - name: home

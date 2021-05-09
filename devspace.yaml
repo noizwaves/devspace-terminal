@@ -28,12 +28,13 @@ dev:
       labelSelector:
         name: terminal
       initialSync: preferLocal
-      containerPath: /root
+      containerPath: /home/terminal-user
       localSubPath: ./home
       excludePaths:
         - '**'
-        - '!/.aliases'
+        - '!/.bash_aliases'
         - '!/.gitconfig'
+        - '!/.tmux.conf'
   ports:
     - labelSelector:
         name: terminal
